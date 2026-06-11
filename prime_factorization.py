@@ -2,11 +2,12 @@ import tkinter as tk
 import random
 
 def start_game():
-    global n, correct, score, total_questions
+    global n, correct, score, total_questions, current_q
     name = entry_name.get()
     level = difficulty.get()
     total_questions = question_count.get()
     score = 0
+    current_q = 0
 
     if level == "かんたん":
         low, high = 2, 50
@@ -42,31 +43,33 @@ def prime_factors(n):
 
 #正誤判定の関数
 def check_answer(): 
-    global n, correct, score #global宣言
+    global n, correct, score, current_q #global宣言
     answer = entry_answer.get() #入力欄の文字を取得
     if answer == "":
         return
+    lbl_result.config(text="")
     result = [int(x) for x in answer.split(",")]
+
+    if difficulty.get() =="かんたん":
+        low, high = 2, 50
+    elif difficulty.get()  == "ふつう":
+        low, high = 51, 100
+    else:
+        low, high = 101, 500
 
     if sorted(result) == sorted(correct):
         lbl_result.config(text="正解！", fg="green")
-        
-        if difficulty.get() == "かんたん":
-            low, high = 2, 50
-        elif difficulty.get()  == "ふつう":
-            low, high = 51, 100
-        else:
-            low, high = 101, 500
         n = random.randint(low, high)
 
         correct = prime_factors(n)
-
+        
         lbl_question.config(text= f"{n}を素因数分解してください\n(カンマ区切りで入力)\n(例：18の場合2,3,3)")
         entry_answer.delete(0, tk.END) #入力欄を空にする
         score += 1
+        current_q += 1
         lbl_score.config(text= f"{entry_name.get()}さん{score}/{total_questions}")
 
-        if score >= total_questions:
+        if current_q >= total_questions:
             #終了画面を表示
             frame_game.pack_forget()
             lbl_finish.config(text= f"ゲーム終了！\n{entry_name.get()}さん{total_questions}問中{score}問正解！")
@@ -75,6 +78,15 @@ def check_answer():
 
     else:
         lbl_result.config(text=f"残念...正解は{correct}でした", fg= "red")
+        n= random.randint(low, high)
+        correct = prime_factors(n)
+        lbl_question.config(text= f"{n}を素因数分解してください\n(カンマ区切りで入力)\n(例：18の場合 2,3,3)")
+        entry_answer.delete(0, tk.END)
+        current_q += 1
+        if current_q >= total_questions:
+            frame_game.pack_forget()
+            lbl_finish.config(text= f"ゲーム終了！\n{entry_name.get()}さん{total_questions}問中{score}問正解！")
+            frame_finish.pack()
 
 #ヒントを出す関数
 def show_hint():
@@ -93,7 +105,12 @@ def back_to_start():
     lbl_result.config(text="")
     _root.bind("<Return>", lambda event: start_game())
 
-
+#ゲーム終了後に初期化する関数
+def reset():
+    frame_finish.pack_forget()
+    frame_game.pack_forget()
+    lbl_result.config(text="")
+    frame_start.pack()
 
 ###################### UI ######################
 
@@ -163,7 +180,7 @@ def build(root, frame, back_to_top= None):
     tk.Button(frame_finish, text="もう一度遊ぶ", font=("Arial", 12), command= replay).pack(pady=10)
     tk.Button(frame_finish, text="素因数分解ゲームスタート画面へ戻る", font=("Arial", 12), command= back_to_start).pack(pady=10)
     if back_to_top:
-        tk.Button(frame_finish, text= "ゲーム選択に戻る", font=("Arial", 12), command=back_to_top).pack(pady=10)
+        tk.Button(frame_finish, text= "トップに戻る", font=("Arial", 12), command=back_to_top).pack(pady=10)
  
 
 #UI

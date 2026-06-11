@@ -56,6 +56,14 @@ def start_game():
     lbl_question.config(text= f"{n}は素数ですか？")
     lbl_score.config(text= f"{entry_name.get()}さん スコア：0")
 
+#ゲーム終了後内容を初期化する関数
+def reset():
+    frame_finish.pack_forget()
+    frame_prime.pack_forget()
+    lbl_result.config(text="")
+    frame_start.pack()
+
+#スタート画面に戻る関数
 def back_to_start():
     global score, n, total_questions
     score = 0
