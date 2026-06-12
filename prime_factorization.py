@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 
+#スタート画面
 def start_game():
     global n, correct, score, total_questions, current_q
     name = entry_name.get()

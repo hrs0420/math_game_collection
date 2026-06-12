@@ -52,8 +52,8 @@ def can_make_10(numbers):
                 pass
     return False
 
-#正誤判定の関数
 
+#正誤判定の関数
 def check_answer():
     global score, numbers,name, current_q
     current_q += 1
@@ -86,6 +86,7 @@ def check_answer():
         frame_finish.pack()
         lbl_finish.config(text= f"{name}さんの結果：{score}問中{total_questions}問正解！")
 
+#正解例を渡す関数
 def get_solution(numbers):
     #数字の並べ方をすべて試す
     for nums in permutations(numbers):
