@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 import prime_factorization
 import prime_number
 import make10_puzzle
@@ -29,12 +28,6 @@ def go_make10_puzzle():
     frame_make10_puzzle.pack()
     make10_puzzle.reset()
 
-#初期化用の関数
-def reset():
-    frame_game.pack_forget()
-    frame_finish.pack_forget()
-    frame_how_to.pack_forget()
-    frame_start.pack()
 
 
 root = tk.Tk()

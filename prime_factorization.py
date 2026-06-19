@@ -36,10 +36,8 @@ def prime_factors(n):
         if n % i == 0:
             factors.append(i)
             n = n // i
-            pass
         else:
             i = i + 1
-            pass
     return factors
 
 #正誤判定の関数
@@ -119,7 +117,7 @@ def reset():
 #ゲーム画面
 def build(root, frame, back_to_top= None):
     global frame_start, frame_game, frame_finish
-    global lbl_question, lbl_result, lbl_score, lbl_question, lbl_answer, lbl_finish
+    global lbl_question, lbl_result, lbl_score, lbl_question, lbl_finish
     global entry_name, question_count, entry_answer
     global score, total_questions, difficulty, n
     global _root

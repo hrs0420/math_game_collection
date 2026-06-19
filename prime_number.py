@@ -30,7 +30,14 @@ def check_prime(user_answer):
         lbl_finish.config(text=f"ゲーム終了！\n{entry_name.get()}さん {question_count.get()}問中{score}問正解！")
         frame_finish.pack()
     else:
-        n = random.randint(2, 50)
+        if difficulty.get() == "かんたん":
+            low, high = 2, 50
+        elif difficulty.get() =="ふつう":
+            low, high = 51, 100
+        else:
+            low, high = 101, 1000
+    
+        n = random.randint(low, high)
         lbl_question.config(text=f"{n}は素数ですか？")
 
 #もう一度遊ぶための関数
@@ -38,7 +45,14 @@ def replay():
     global score, n, total_questions
     score = 0
     total_questions = question_count.get()
-    n = random.randint(2, 50)
+
+    if difficulty.get() == "かんたん":
+        low, high = 2, 50
+    elif difficulty.get() == "ふつう":
+        low, high = 51, 100
+    else:
+        low, high = 101, 1000
+    n = random.randint(low, high)
     frame_finish.pack_forget()
     frame_prime.pack()
     lbl_question.config(text=f"{n}は素数ですか？")
@@ -50,11 +64,19 @@ def start_game():
     global score, total_questions, n
     score = 0
     total_questions = question_count.get()
-    n = random.randint(2, 50)
+    
+    if difficulty.get() == "かんたん":
+        low, high = 2, 50
+    elif difficulty.get() =="ふつう":
+        low, high = 51, 100
+    else:
+        low, high = 101, 1000
+    
+    n = random.randint(low, high)
     frame_start.pack_forget()
     frame_prime.pack()
     lbl_question.config(text= f"{n}は素数ですか？")
-    lbl_score.config(text= f"{entry_name.get()}さん スコア：0")
+    lbl_score.config(text= f"{entry_name.get()}さん{score}/{total_questions}")
 
 #ゲーム終了後内容を初期化する関数
 def reset():
